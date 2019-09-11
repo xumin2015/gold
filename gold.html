@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+    <meta charset="UTF-8">
+    <title>金币中奖情况查询</title>
+
+
+</head>
+
+<body style="padding-top: 100px">
+<div style="padding:20px 20px;text-align: center;color:red;font-size: 16px">
+    本查询系统针对于在 <a href="www.chinagoldcoin.net" target="_blank">www.chinagoldcoin.net</a> 系统购买建国70周年纪念币查询中签情况，请在下方输入框输入您的订单号以及在选择框选择购买种类，然后点击查询，会弹出中奖情况
+</div>
+<div style="text-align:center;clear:both;margin-top: 50px">
+    <select name="" id="selectid" onchange="selectchange(event)">
+        <option value="0">俩30g银币套装</option>
+        <option value="1">150g银币套装</option>
+        <option value="2">1金俩银套装</option>
+        <option value="3">1公斤银币</option>
+
+    </select>
+    <input type="number" id="nummark" placeholder="您的订单号"  >
+
+    <button onclick="input()">
+         查询
+    </button>
+
+
+</div>
+<script>
+    let BBB=483215408016;
+    let baomingx={
+        0:27932,
+        1:25159,
+        2:23404,
+        3:16608
+    };
+    let zhongjiangx={
+        0:2150,
+        1:100,
+        2:3350,
+        3:50
+    };
+    let y={};
+    let z={};
+    Object.keys(baomingx).map((item,index)=>{
+        y[item]=BBB%baomingx[item]+1;
+        z[item]=Math.floor(baomingx[item]/zhongjiangx[item]);
+    });
+    let zhongjiangnumobj={
+        0:[],
+        1:[],
+        2:[],
+        3:[]
+    }
+    Object.keys(zhongjiangx).map((item,index)=>{
+        let originnum=y[item];
+
+        for(let i=0;i<zhongjiangx[item];i++){
+            let currentzhongjiangnum=originnum+z[item]*i;
+            if(currentzhongjiangnum>baomingx[item])
+                currentzhongjiangnum=currentzhongjiangnum-baomingx[item];
+            zhongjiangnumobj[item].push(currentzhongjiangnum+'');
+        }
+    });
+
+
+
+    function selectchange(e){
+        console.log('selectchange',e.target.value,document.getElementById('nummark').value);
+
+    }
+
+    function input(e){
+        console.log(2323)
+      setTimeout(()=>{
+          console.log(22,document.getElementById('selectid').value)
+          console.log(document.getElementById('nummark').value);
+
+          let selectitem=Number(document.getElementById('selectid').value);
+          let inputnum=document.getElementById('nummark').value;
+          console.log(selectitem,inputnum,zhongjiangnumobj,zhongjiangnumobj[selectitem])
+        console.log(zhongjiangnumobj[selectitem].indexOf(inputnum)>-1);
+          if(zhongjiangnumobj[selectitem].indexOf(inputnum)>-1){
+             alert('中奖');
+
+          }
+          else{
+              alert('未中奖');
+          }
+
+    },200)
+
+    }
+
+
+</script>
+</body>
+
+</html>
